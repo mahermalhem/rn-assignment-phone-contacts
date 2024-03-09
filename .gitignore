@@ -157,3 +157,5 @@ ios/Pods
 ios/Podfile.lock
 
 vendor
+
+android/app/build
