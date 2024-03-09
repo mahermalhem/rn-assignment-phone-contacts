@@ -6,9 +6,9 @@ import { t } from "i18next";
 import { IContactCard } from "./types";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const ContactCard: FC<IContactCard> = ({item,onFavPress}:{item: IContactCard, onFavPress: void }) => {
+const ContactCard: FC<IContactCard> = ({item, onFavPress, onMorePress }:{item: IContactCard, onFavPress: void, onMorePress:void}) => {
   
-  const [isFav,setIsFav] = useState(item.isStarred)
+  const [isFav,setIsFav] = useState(item?.isStarred)
   
   const onPressFav = ()=>{
     setIsFav(!isFav)
@@ -21,29 +21,28 @@ const ContactCard: FC<IContactCard> = ({item,onFavPress}:{item: IContactCard, on
 
   return (
     <View style={styles.Cont}>
-      <TouchableOpacity onPress={()=>onElementPress(item.phoneNumbers[0]?.number)} style={styles.nameCont}>
+      <TouchableOpacity onPress={()=>onElementPress(item?.phoneNumbers[0]?.number)} style={styles.nameCont}>
         <View style={styles.thumpNailCont}>
           {item?.hasThumbnail && item?.thumbnailPath
-            ? <Image resizeMode='contain' style={styles.thumpNailImg} source={{uri:item.thumbnailPath}}/>
+            ? <Image resizeMode='contain' style={styles.thumpNailImg} source={{uri:item?.thumbnailPath}}/>
             : <Text style={styles.innertxt}>{item?.displayName[0]}</Text>
           }
         </View>
         <View style={{justifyContent:'center',alignItems:'flex-start',marginHorizontal:5}}>
           <Text style={styles.txt}>{item?.displayName}</Text>
-          <Text style={styles.phonetxt}>{item.phoneNumbers[0]?.number}</Text>
-          {/* {item.phoneNumbers.map(phone=><Text key={phone.id} style={styles.phonetxt}>{phone.number}</Text>)} */}
+          <Text style={styles.phonetxt}>{item?.phoneNumbers[0]?.number}</Text>
         </View>
       </TouchableOpacity>
       <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'flex-end',marginHorizontal:5}}>
-       <TouchableOpacity TouchableOpacity onPress={onPressFav}   style={{marginHorizontal:4}}>
+       <TouchableOpacity onPress={onPressFav} style={{marginHorizontal:4}}>
         {isFav
           ?  <Icon name="star" size={25} color="green"/> 
           :  <Icon name="star-o" size={25} color="green"/> 
         }
        </TouchableOpacity>
-       <View style={{marginHorizontal:4}}>
+       <TouchableOpacity onPress={()=>onMorePress(item)} style={{marginHorizontal:4}}>
         <Icon name="th-list" size={22} color="purple" /> 
-      </View>        
+      </TouchableOpacity>        
       </View>
     </View>
   );
